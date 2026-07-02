@@ -1,6 +1,6 @@
 export const SITE = {
-  title: 'Agnogod',
-  description: 'Kişisel bir bilim ve teknoloji blogu.',
+  title: 'Agnogad',
+  description: 'Bilim, felsefe ve psikoloji uzerine kendi arguman ve fikirlerimle yazdigim makaleler.',
   url: 'https://agnogad.github.io',
   author: 'Agnogad',
   authorEmail: 'agnogad@example.com',
