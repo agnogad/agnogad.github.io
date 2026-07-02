@@ -95,13 +95,15 @@ body {
   min-height: 100vh;
   background-color: var(--color-bg);
   color: var(--color-text);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   display: flex;
   flex-direction: column;
 }
 
 main {
   flex: 1;
+}
+footer {
+  padding: 2rem 0;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -300,19 +302,15 @@ a:hover {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   Mobile adjustments
-   ═══════════════════════════════════════════════════ */
-
 @media (max-width: 767px) {
-  body {
-    padding-bottom: 72px;
-  }
-
   .content-wrapper,
   .content-wide {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  footer {
+    padding-bottom: calc(2rem + 72px);
   }
 }
 
