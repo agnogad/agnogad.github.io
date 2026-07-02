@@ -1,0 +1,128 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await post.render();
+const readingTime = remarkPluginFrontmatter?.minutes ?? 0;
+
+// Turkish reading time helper
+function turkishReadingTime(minutes: number): string {
+  if (minutes < 1) return "1 dakikadan az";
+  const rounded = Math.ceil(minutes);
+  if (rounded === 1) return "1 dakika";
+  return `${rounded} dakika`;
+}
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image}
+  canonicalURL={post.data.canonicalURL}
+  type="article"
+>
+  <!-- Reading progress bar -->
+  <div id="reading-progress" class="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none" style="background: transparent;">
+    <div id="progress-fill" class="h-full w-0 transition-[width] duration-100 ease-linear" style="background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));"></div>
+  </div>
+
+  <article class="content-wrapper py-8 md:py-12">
+    <!-- Article Header -->
+    <header class="mb-8 md:mb-12">
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        {
+          post.data.tags.map((tag) => (
+            <a
+              href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+              class="font-sans text-xs font-medium no-underline rounded-full border px-3 py-1 transition-all duration-200 hover:scale-105"
+              style="color: var(--color-text-secondary); border-color: var(--color-border-light); background-color: var(--color-accent-surface);"
+            >
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Title -->
+      <h1 class="font-sans text-2xl md:text-4xl font-bold leading-tight tracking-tight mb-3" style="color: var(--color-text);">
+        {post.data.title}
+      </h1>
+
+      <!-- Description -->
+      <p class="font-serif text-base md:text-lg leading-relaxed mb-4" style="color: var(--color-text-secondary);">
+        {post.data.description}
+      </p>
+
+      <!-- Meta line -->
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1 font-sans text-sm" style="color: var(--color-text-muted);">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('tr-TR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <span class="w-1 h-1 rounded-full" style="background-color: var(--color-border-light);"></span>
+        <span>{turkishReadingTime(readingTime)} okuma</span>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="prose prose-base md:prose-lg max-w-none">
+      <Content />
+    </div>
+  </article>
+
+  <!-- Back to top -->
+  <button
+    id="back-to-top"
+    class="fixed bottom-[80px] right-4 md:bottom-8 md:right-8 z-50 w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 translate-y-4 pointer-events-none"
+    style="background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary);"
+    aria-label="Yukari cik"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </svg>
+  </button>
+
+
+  <script>
+    // Reading progress bar
+    const progressFill = document.getElementById('progress-fill');
+    if (progressFill) {
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight > 0) {
+          const progress = Math.min((scrollTop / docHeight) * 100, 100);
+          progressFill.style.width = progress + '%';
+        }
+      }, { passive: true });
+    }
+
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          backToTop.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+          backToTop.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        } else {
+          backToTop.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+          backToTop.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        }
+      }, { passive: true });
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  </script>
+</BaseLayout>

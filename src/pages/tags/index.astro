@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getTagCounts, sortPostsByDate } from '@/lib/utils';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const tagCounts = getTagCounts(allPosts);
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+
+// Build a map: tag -> most recent post slug + title
+const latestByTag = new Map<string, { slug: string; title: string }>();
+for (const [tag] of sortedTags) {
+  const tagged = sortPostsByDate(
+    allPosts.filter((p) => p.data.tags.includes(tag))
+  );
+  const latest = tagged[0];
+  if (latest) {
+    latestByTag.set(tag, { slug: latest.slug, title: latest.data.title });
+  }
+}
+
+// Group: single-letter sections
+const grouped: Record<string, [string, number][]> = {};
+for (const entry of sortedTags) {
+  const [tag] = entry;
+  const initial = tag.charAt(0).toUpperCase();
+  if (!grouped[initial]) grouped[initial] = [];
+  grouped[initial].push(entry);
+}
+const initials = Object.keys(grouped).sort();
+
+const totalCount = allPosts.length;
+const tagsCount = sortedTags.length;
+---
+
+<BaseLayout
+  title="Etiketler"
+  description="Tum etiketler"
+>
+  <div class="content-wide py-8 md:py-16">
+
+    <!-- Hero -->
+    <div class="max-w-xl mx-auto text-center mb-10 md:mb-14">
+      <div
+        class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+        style="background-color: var(--color-surface); border: 1px solid var(--color-border);"
+      >
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-secondary);">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+          <line x1="7" y1="7" x2="7.01" y2="7" />
+        </svg>
+      </div>
+      <h1 class="font-sans text-3xl md:text-4xl font-bold mb-2 tracking-tight" style="color: var(--color-text);">
+        Etiketler
+      </h1>
+      <p class="font-sans text-sm" style="color: var(--color-text-muted);">
+        {tagsCount} etiket &middot; {totalCount} yazi
+      </p>
+    </div>
+
+    <!-- Alphabetical jump -->
+    <div class="flex flex-wrap justify-center gap-2 mb-10 md:mb-14">
+      {initials.map((ch) => (
+        <a
+          href={`#group-${ch}`}
+          class="font-sans text-sm font-medium no-underline w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+          style="color: var(--color-text-muted); background-color: var(--color-accent-surface); border: 1px solid var(--color-border);"
+        >
+          {ch}
+        </a>
+      ))}
+    </div>
+
+    <!-- Tag groups -->
+    <div class="max-w-4xl mx-auto space-y-10 md:space-y-14">
+      {initials.map((ch) => {
+        const entries = grouped[ch];
+        return (
+          <section id={`group-${ch}`}>
+            <h2
+              class="font-sans text-xs font-semibold uppercase tracking-widest mb-4 px-1"
+              style="color: var(--color-text-muted);"
+            >
+              {ch}
+            </h2>
+            <div class="grid gap-3 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {entries.map(([tag, count]) => {
+                const latest = latestByTag.get(tag);
+                return (
+                  <a
+                    href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                    class="m3-card flex flex-col gap-2 no-underline group transition-all duration-200"
+                    style="background-color: var(--color-surface);"
+                  >
+                    <div class="flex items-center justify-between">
+                      <span class="font-sans font-medium text-sm md:text-base" style="color: var(--color-text);">
+                        {tag}
+                      </span>
+                      <span
+                        class="font-sans text-xs font-medium px-2 py-0.5 rounded-full shrink-0"
+                        style="color: var(--color-text-muted); background-color: var(--color-accent-surface); border: 1px solid var(--color-border-light);"
+                      >
+                        {count}
+                      </span>
+                    </div>
+                    {latest && (
+                      <span class="font-sans text-xs line-clamp-1" style="color: var(--color-text-muted);">
+                        {latest.title}
+                      </span>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

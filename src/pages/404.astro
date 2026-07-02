@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Sayfa Bulunamadi">
+  <div class="content-wrapper py-24 text-center">
+    <h1
+      class="font-sans text-6xl md:text-7xl font-bold mb-4"
+      style="color: var(--color-text-muted);"
+    >
+      404
+    </h1>
+    <p class="text-lg mb-10" style="color: var(--color-text-secondary);">
+      Bu sayfa mevcut degil.
+    </p>
+    <a
+      href="/"
+      class="font-sans text-sm font-medium no-underline px-6 py-3 rounded-lg transition-colors inline-block"
+      style="background-color: var(--color-accent); color: var(--color-bg);"
+    >
+      Anasayfaya Don
+    </a>
+  </div>
+</BaseLayout>

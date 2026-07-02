@@ -1,0 +1,44 @@
+---
+import TagChip from '@/components/TagChip.astro';
+import { formatDate, readingTime } from '@/lib/utils';
+
+export interface Props {
+  post: {
+    slug: string;
+    data: {
+      title: string;
+      description: string;
+      date: Date;
+      tags: string[];
+      image?: string;
+      imageAlt?: string;
+    };
+    body?: string;
+  };
+}
+
+const { post } = Astro.props;
+const { data } = post;
+---
+
+<article class="m3-card flex flex-col">
+  <div class="flex flex-wrap gap-2 mb-3">
+    {data.tags.map((tag) => <TagChip tag={tag} />)}
+  </div>
+  <h2 class="font-sans text-lg md:text-xl font-semibold leading-snug mb-2">
+    <a
+      href={`/posts/${post.slug}/`}
+      class="no-underline"
+      style="color: var(--color-text);"
+    >
+      {data.title}
+    </a>
+  </h2>
+  <p class="mb-4 line-clamp-3 flex-1 text-sm md:text-base" style="color: var(--color-text-secondary);">
+    {data.description}
+  </p>
+  <div class="flex items-center gap-3 font-sans text-xs" style="color: var(--color-text-muted);">
+    <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+    {post.body && <><span aria-hidden="true">&middot;</span><span>{readingTime(post.body)}</span></>}
+  </div>
+</article>

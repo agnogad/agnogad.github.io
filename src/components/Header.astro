@@ -1,0 +1,53 @@
+---
+import { SITE, NAV_LINKS } from '@/lib/constants';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  class="sticky top-0 z-50 backdrop-blur-lg"
+  style="background-color: color-mix(in srgb, var(--color-bg-secondary) 85%, transparent); border-bottom: 1px solid var(--color-border);"
+>
+  <div class="content-wide flex items-center justify-between h-14 md:h-16">
+    <!-- Site title -->
+    <a
+      href="/"
+      class="font-sans text-lg md:text-xl font-semibold no-idden tracking-tight"
+      style="color: var(--color-text);"
+    >
+      {SITE.title}
+    </a>
+
+    <!-- Desktop nav links -->
+    <div class="hidden md:flex items-center gap-1">
+      {
+        NAV_LINKS.map((link) => {
+          const isActive = link.href === '/'
+            ? currentPath === '/'
+            : currentPath.startsWith(link.href);
+          return (
+            <a
+              href={link.href}
+              class="font-sans text-sm font-medium no-underline px-3 py-2 rounded-lg transition-colors"
+              class:list={[
+                isActive
+                  ? 'text-[var(--color-text)] bg-[var(--color-accent-surface)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-accent-surface)]',
+              ]}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+      <span class="w-2" />
+      <ThemeToggle />
+    </div>
+
+    <!-- Mobile theme toggle -->
+    <div class="md:hidden">
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

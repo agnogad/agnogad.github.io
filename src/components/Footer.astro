@@ -1,0 +1,14 @@
+---
+import { SITE } from '@/lib/constants';
+---
+
+<footer style="background-color: var(--color-bg-secondary); border-top: 1px solid var(--color-border); margin-top: 4rem; padding: 2rem 0;">
+  <div class="content-wide flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="font-sans text-sm" style="color: var(--color-text-muted);">
+      &copy; {new Date().getFullYear()} {SITE.author}
+    </p>
+    <p class="font-sans text-sm" style="color: var(--color-text-muted);">
+      <a href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</a>
+    </p>
+  </div>
+</footer>

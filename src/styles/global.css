@@ -1,0 +1,407 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════
+   Monochrome Material You — Color System
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* Dark theme (default) — tonal monochrome palette */
+  --color-bg: #111111;
+  --color-bg-secondary: #1a1a1a;
+  --color-surface: #242424;
+  --color-surface-elevated: #2e2e2e;
+  --color-border: #383838;
+  --color-border-light: #444444;
+
+  --color-text: #f0f0f0;
+  --color-text-secondary: #ababab;
+  --color-text-muted: #6e6e6e;
+
+  --color-accent: #d4d4d4;
+  --color-accent-hover: #eeeeee;
+  --color-accent-dim: #8a8a8a;
+
+  --color-accent-surface: rgba(255, 255, 255, 0.04);
+  --color-accent-border: rgba(255, 255, 255, 0.08);
+
+  --color-code-bg: #181818;
+  --color-code-border: #2a2a2a;
+  --color-code-inline-bg: rgba(255, 255, 255, 0.06);
+
+  --color-success: #34c759;
+  --color-warning: #ff9f0a;
+  --color-error: #ff453a;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+.light {
+  --color-bg: #f5f5f7;
+  --color-bg-secondary: #e8e8ec;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-border: #d1d1d6;
+  --color-border-light: #c4c4c9;
+
+  --color-text: #1c1c1e;
+  --color-text-secondary: #636366;
+  --color-text-muted: #aeaeb2;
+
+  --color-accent: #48484a;
+  --color-accent-hover: #2c2c2e;
+  --color-accent-dim: #8a8a8e;
+
+  --color-accent-surface: rgba(0, 0, 0, 0.04);
+  --color-accent-border: rgba(0, 0, 0, 0.08);
+
+  --color-code-bg: #f0f0f2;
+  --color-code-border: #d8d8dc;
+  --color-code-inline-bg: rgba(0, 0, 0, 0.06);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════
+   Typography
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   Base Elements — Material You styling
+   ═══════════════════════════════════════════════════ */
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+a {
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ═══════════════════════════════════════════════════
+   Layout
+   ═══════════════════════════════════════════════════ */
+
+.content-wrapper {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.content-wide {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   Prose — Tailwind Typography with monochrome palette
+   ═══════════════════════════════════════════════════ */
+
+.prose {
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-code-bg);
+  --tw-prose-quotes: var(--color-text-secondary);
+  --tw-prose-quote-borders: var(--color-accent-dim);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border-light);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-bullets: var(--color-text-muted);
+}
+
+.prose pre {
+  border: 1px solid var(--color-code-border);
+  background-color: var(--color-code-bg);
+  border-radius: var(--radius-md);
+}
+
+.prose code {
+  background-color: var(--color-code-inline-bg);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 400;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose img {
+  border-radius: var(--radius-md);
+}
+
+.prose blockquote {
+  border-left-color: var(--color-accent-dim);
+  border-left-width: 3px;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.prose hr {
+  border-color: var(--color-border);
+}
+
+.prose table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.prose th {
+  background-color: var(--color-bg-secondary);
+  font-weight: 600;
+}
+
+.prose td, .prose th {
+  padding: 0.625rem 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   Material You — Card Component
+   ═══════════════════════════════════════════════════ */
+
+.m3-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.m3-card:hover {
+  background-color: var(--color-surface-elevated);
+}
+
+/* ═══════════════════════════════════════════════════
+   Bottom Navigation (Mobile)
+   ═══════════════════════════════════════════════════ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  height: 64px;
+}
+
+.bottom-nav a,
+.bottom-nav button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 0;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav a.active,
+.bottom-nav button.active {
+  color: var(--color-text);
+}
+
+.bottom-nav a.active svg,
+.bottom-nav button.active svg {
+  color: var(--color-text);
+}
+
+.bottom-nav a.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background-color: var(--color-text);
+  border-radius: 0 0 3px 3px;
+}
+
+/* Show desktop nav, hide bottom nav by default */
+.bottom-nav {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   Mobile adjustments
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 72px;
+  }
+
+  .content-wrapper,
+  .content-wide {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   KaTeX overrides
+   ═══════════════════════════════════════════════════ */
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.75rem 0;
+  margin: 1.5rem 0;
+}
+
+.katex {
+  font-size: 1.1em;
+}
+
+/* ═══════════════════════════════════════════════════
+   Expressive Code overrides
+   ═══════════════════════════════════════════════════ */
+
+figure.frame pre {
+  background-color: var(--color-code-bg) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   Scrollbar
+   ═══════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ═══════════════════════════════════════════════════
+   Smooth transitions for theme toggle
+   ═══════════════════════════════════════════════════ */
+
+body * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+/* ───────────────────────────────────
+   Post Layout — mobile & readability
+   ─────────────────────────────────── */
+
+.prose h2, .prose h3, .prose h4 {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 767px) {
+  .prose p {
+    line-height: 1.75;
+  }
+  .prose h2 {
+    font-size: 1.4rem;
+  }
+  .prose h3 {
+    font-size: 1.15rem;
+  }
+  .prose {
+    font-size: 1.025rem;
+  }
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.75rem 0;
+  margin: 1.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}

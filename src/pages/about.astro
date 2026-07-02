@@ -1,0 +1,99 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/lib/constants';
+---
+
+<BaseLayout
+  title="Hakkinda"
+  description="Bu blog hakkinda"
+>
+  <div class="content-wide py-8 md:py-16">
+    <!-- Hero / Profile -->
+    <div class="max-w-2xl mx-auto text-center mb-12 md:mb-16">
+      <div
+        class="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto mb-5 flex items-center justify-center"
+        style="background-color: var(--color-surface); border: 2px solid var(--color-border);"
+      >
+        <span class="font-sans text-2xl md:text-3xl font-bold" style="color: var(--color-text);">A</span>
+      </div>
+      <h1 class="font-sans text-3xl md:text-4xl font-bold mb-3 tracking-tight" style="color: var(--color-text);">
+        {SITE.author}
+      </h1>
+      <p class="text-base md:text-lg max-w-lg mx-auto" style="color: var(--color-text-secondary);">
+        Bilim, matematik ve teknoloji uzerine arastirma ve analizler.
+      </p>
+    </div>
+
+    <!-- Content grid -->
+    <div class="max-w-2xl mx-auto space-y-6">
+      <!-- About the blog -->
+      <section class="m3-card">
+        <h2 class="font-sans text-lg font-semibold mb-3" style="color: var(--color-text);">
+          Bu Blog
+        </h2>
+        <div class="prose prose-base max-w-none" style="--tw-prose-body: var(--color-text-secondary);">
+          <p>
+            Bilim, matematik ve teknoloji uzerine kisisel bir blog. Her yazi,
+            konuyu derinlemesine ele almayi, kod ornekleri ve matematiksel
+            gosterimlerle desteklemeyi amaclar.
+          </p>
+        </div>
+      </section>
+
+      <!-- Topics -->
+      <section class="m3-card">
+        <h2 class="font-sans text-lg font-semibold mb-3" style="color: var(--color-text);">
+          Konular
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Kuantum Bilgisayar</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Makine Ogrenmesi</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Iklim Bilimi</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Matematik</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Fizik</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Veri Bilimi</span>
+          <span class="font-sans text-sm px-3 py-1.5 rounded-full" style="background-color: var(--color-accent-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border-light);">Algoritmalar</span>
+        </div>
+      </section>
+
+      <!-- Colophon -->
+      <section class="m3-card">
+        <h2 class="font-sans text-lg font-semibold mb-3" style="color: var(--color-text);">
+          Kolofon
+        </h2>
+        <div class="prose prose-base max-w-none" style="--tw-prose-body: var(--color-text-secondary);">
+          <p>
+            Bu site <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>
+            ile insa edilmis, ozel bir monokrom temasi ile stillendirilmistir.
+            Icerik Markdown formatinda yazilir, kod bloklari Expressive Code ile
+            vurgulanir, matematik ifadeler KaTeX ile render edilir.
+          </p>
+        </div>
+      </section>
+
+      <!-- Tech stack -->
+      <section class="m3-card">
+        <h2 class="font-sans text-lg font-semibold mb-3" style="color: var(--color-text);">
+          Teknoloji
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {
+            [
+              { name: 'Astro', desc: 'Statik site generatoru' },
+              { name: 'Bun', desc: 'JS runtime & paket yoneticisi' },
+              { name: 'KaTeX', desc: 'Matematik render' },
+              { name: 'Tailwind', desc: 'CSS framework' },
+              { name: 'Fuse.js', desc: 'Istemci tarafi arama' },
+              { name: 'Expressive Code', desc: 'Kod vurgulama' },
+            ].map((tech) => (
+              <div class="rounded-xl p-3" style="background-color: var(--color-accent-surface); border: 1px solid var(--color-border-light);">
+                <div class="font-sans text-sm font-medium mb-0.5" style="color: var(--color-text);">{tech.name}</div>
+                <div class="font-sans text-xs" style="color: var(--color-text-muted);">{tech.desc}</div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

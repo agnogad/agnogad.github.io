@@ -1,0 +1,88 @@
+<div class="relative w-full" id="search-wrapper">
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Yazilarda ara..."
+    aria-label="Yazilarda ara"
+    autocomplete="off"
+    class="w-full px-4 py-3 rounded-xl border font-sans text-sm outline-none transition-colors"
+    style="background-color: var(--color-bg); border-color: var(--color-border); color: var(--color-text);"
+  />
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 mt-2 rounded-xl border shadow-lg z-50 hidden overflow-hidden"
+    style="background-color: var(--color-surface); border-color: var(--color-border);"
+  ></div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  let fuse = null;
+
+  fetch('/search-index.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      fuse = new Fuse(data, {
+        keys: [
+          { name: 'title', weight: 0.4 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.2 },
+          { name: 'content', weight: 0.1 },
+        ],
+        threshold: 0.4,
+        includeScore: true,
+      });
+    });
+
+  input.addEventListener('input', function () {
+    var query = input.value.trim();
+    if (!query || !fuse) {
+      results.classList.add('hidden');
+      return;
+    }
+
+    var matches = fuse.search(query, { limit: 8 });
+    if (matches.length === 0) {
+      results.innerHTML =
+        '<div class="p-4 text-sm" style="color: var(--color-text-muted)">Sonuc bulunamadi.</div>';
+      results.classList.remove('hidden');
+      return;
+    }
+
+    results.innerHTML = matches
+      .map(function (m) {
+        var item = m.item;
+        var title = escapeHtml(item.title);
+        var desc = escapeHtml(item.description);
+        return (
+          '<a href="/posts/' +
+          item.slug +
+          '/" class="block p-3 border-b last:border-b-0 transition-colors no-underline" style="border-color: var(--color-border-light);">' +
+          '<div class="font-sans font-medium text-sm" style="color: var(--color-text)">' +
+          title +
+          '</div>' +
+          '<div class="font-sans text-xs mt-0.5" style="color: var(--color-text-muted)">' +
+          desc +
+          '</div>' +
+          '</a>'
+        );
+      })
+      .join('');
+    results.classList.remove('hidden');
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!document.getElementById('search-wrapper').contains(e.target)) {
+      results.classList.add('hidden');
+    }
+  });
+
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+  }
+</script>

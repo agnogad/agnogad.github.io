@@ -1,0 +1,69 @@
+---
+import { BOTTOM_NAV_ITEMS } from '@/lib/constants';
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="bottom-nav" aria-label="Ana navigasyon">
+  {
+    BOTTOM_NAV_ITEMS.map((item) => {
+      const isActive = item.href === '/'
+        ? currentPath === '/'
+        : currentPath.startsWith(item.href);
+
+      return item.search ? (
+        <button class:list={['bottom-nav-item', { active: isActive }]} data-search-btn="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <span>{item.label}</span>
+        </button>
+      ) : (
+        <a href={item.href} class:list={['bottom-nav-item', { active: isActive }]}>
+          {
+            item.icon === 'home' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            )
+          }
+          {
+            item.icon === 'tag' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                <line x1="7" y1="7" x2="7.01" y2="7" />
+              </svg>
+            )
+          }
+          {
+            item.icon === 'info' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            )
+          }
+          <span>{item.label}</span>
+        </a>
+      );
+    })
+  }
+</nav>
+
+<script>
+  const searchBtn = document.querySelector('[data-search-btn]');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function () {
+      const input = document.getElementById('search-input');
+      if (input) {
+        input.focus();
+        input.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = '/';
+      }
+    });
+  }
+</script>
