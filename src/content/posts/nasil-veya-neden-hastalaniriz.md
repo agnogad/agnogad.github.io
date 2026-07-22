@@ -1,6 +1,7 @@
 ---
 title: "Hastalıkların Etiyolojisi: Viral Patogenez ve Bağışıklık Sisteminin İşleyişi"
 date: 2026-07-22T17:31:05+04:00
+description: "Viral Patogenez ve Bağışıklık Sisteminin İşleyişi"
 draft: false
 categories:
   - "Sağlık Bilimleri"
@@ -10,8 +11,9 @@ tags:
   - "Bağışıklık Sistemi"
   - "Aşılar"
   - "Halk Sağlığı"
-author: "Editör"
+author: "agnogad"
 ---
+
 
 > **Yazar Notu / Sorumluluk Beyanı:**  
 > Uzun bir aranın ardından kaleme alınan bu metin, kişisel gözlemler ve analitik çıkarımlar temelinde hazırlanmıştır. Hakemli bir bilimsel makale statüsünde değerlendirilmemelidir. Okuyucuların burada sunulan bilgileri kendi araştırmalarıyla desteklemeleri ve eleştirel bir yaklaşım benimsemeleri tavsiye edilir. Bilimsel süreçlerin doğası gereği, sunulan perspektiflerde hata payı bulunabileceği göz önünde bulundurulmalıdır.
