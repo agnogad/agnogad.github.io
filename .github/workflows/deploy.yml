@@ -15,36 +15,33 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: .
+  AGNO_REV: dd26606f31d7fea1f4c9b32b0848317aef30c688
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install agno
+        run: cargo install --git https://github.com/agnogad/agno --rev "$AGNO_REV" --locked
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Install dependencies
-        run: bun install
-        working-directory: ${{ env.BUILD_PATH }}
-
-      - name: Build
-        run: bun run build
-        working-directory: ${{ env.BUILD_PATH }}
+      - name: Build site
+        run: agno build --stats
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.BUILD_PATH }}/dist
+          path: dist
 
   deploy:
     runs-on: ubuntu-latest

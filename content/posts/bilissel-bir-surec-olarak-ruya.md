@@ -7,8 +7,6 @@ tags: ["Bilişsel Bilim", "Rüya Analizi", "Hafıza", "Nöropsikoloji"]
 categories: ["Zihin ve Bilim"]
 ---
 
-# Bilişsel Bir Süreç Olarak Rüya: Hayal Gücü, Lucid Rüya ve Hafıza İlişkisi
-
 ## Giriş
 
 Rüyalar... Sanırım insanlığın en eski meraklarından biri. Geçenlerde bu konu üzerine tekrar düşünürken fark ettim ki, rüyaları çoğu zaman gereğinden fazla gizemli hale getiriyoruz.

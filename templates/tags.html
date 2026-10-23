@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container page-pad">
+  <section class="tags-hero">
+    <div class="tags-icon" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+      </svg>
+    </div>
+    <h1>{{ page.title }}</h1>
+    <p>{{ site.tags|length }} etiket · {{ site.post_count }} yazı</p>
+  </section>
+
+  <div class="tags-grid">
+    {% for tag in site.tags %}
+    <a class="tag-card" href="{{ tag.url|safe }}">
+      <div class="tag-card-head">
+        <span class="tag-name">{{ tag.name }}</span>
+        <span class="tag-count">{{ tag.count }}</span>
+      </div>
+      {% if tag.latest_title %}<span class="tag-latest">{{ tag.latest_title }}</span>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

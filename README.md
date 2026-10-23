@@ -1,141 +1,127 @@
-# Scientia — Scientific Blog
+# Agnogad
 
-A dark-themed scientific blog built with [Astro](https://astro.build) and [Bun](https://bun.sh), designed for publishing technical and scientific articles with LaTeX math rendering and syntax-highlighted code blocks.
+Bilim, felsefe ve psikoloji üzerine kişisel yazılar. Site, Rust ile yazılmış
+tek binary'lik statik site üreteci [agno](https://github.com/agnogad/agno) ile
+üretilir; Node.js, paket yöneticisi veya çalışma zamanı bağımlılığı yoktur.
 
-## Tech Stack
+## Özellikler
 
-- **Astro 5** — Static site generator with content collections
-- **Bun** — JavaScript runtime and package manager
-- **Markdown** — Post content with frontmatter
-- **KaTeX** — LaTeX math rendering (`remark-math` + `rehype-katex`)
-- **Expressive Code** — Syntax highlighting for code blocks
-- **Fuse.js** — Client-side full-text search
-- **Tailwind CSS 3** — Utility-first CSS framework
-- **@tailwindcss/typography** — Prose styling for blog content
+- Açık/koyu tema; tema tercihi `localStorage` içinde saklanır.
+- Mobil alt gezinme çubuğu ve masaüstü üst menü.
+- Etiket sayfaları, etiket dizini ve yazı sayfalarında etiket bağlantıları.
+- Statik `search-index.json` üzerinden Türkçe karakter destekli arama.
+- RSS akışı (`/rss.xml`), site haritası (`/sitemap.xml`) ve `404.html`.
+- `syntect` ile sunucu tarafında kod vurgulama ve kopyalama düğmesi.
+- İsteğe bağlı KaTeX desteği (`math: true` frontmatter alanı).
+- Okuma süresi, Türkçe tarih biçimi ve okuma ilerleme çubuğu.
+- Erişilebilir odak durumları, semantik HTML ve Open Graph/Twitter meta etiketleri.
 
-## Features
+## Gereksinimler
 
-- Dark theme with light/dark toggle (persisted to localStorage)
-- Responsive layout (mobile, tablet, desktop)
-- Content collections with typed frontmatter schema
-- LaTeX math rendering (inline `$...$` and display `$$...$$`)
-- Syntax-highlighted code blocks with line numbers and copy button
-- Tag-based filtering and navigation
-- Client-side search (Fuse.js)
-- Auto-generated RSS feed (`/rss.xml`)
-- Auto-generated sitemap (`/sitemap-index.xml`)
-- Open Graph and Twitter Card meta tags for social sharing
-- Semantic HTML for accessibility and SEO
+- Rust 1.85 veya üstü
+- Derleme sırasında bir C araç zinciri (`cc`, MSVC veya Xcode)
 
-## Getting Started
+`agno` kaynak koddan kurulur; siteyi üretmek için başka bir bağımlılık gerekmez.
 
-### Prerequisites
+## Geliştirme
 
-- [Bun](https://bun.sh) >= 1.0.0
-
-### Install dependencies
+`agno`'yu GitHub'dan kurun:
 
 ```bash
-bun install
+cargo install --git https://github.com/agnogad/agno --locked
 ```
 
-### Start development server
+Yerel bir agno kopyasıyla çalışıyorsanız:
 
 ```bash
-bun run dev
+cargo install --path ../agno
 ```
 
-Open [http://localhost:4321](http://localhost:4321) in your browser.
-
-### Build for production
+Ardından:
 
 ```bash
-bun run build
+agno dev
 ```
 
-The static site is output to `dist/`.
+Geliştirme sunucusu <http://localhost:1111> adresinde açılır. `content/`,
+`templates/` ve `static/` altındaki değişiklikler yeniden derlenir.
 
-### Preview production build
+Üretim çıktısı:
 
 ```bash
-bun run preview
+agno build
 ```
 
-## Project Structure
+Statik dosyalar `dist/` altına yazılır. `dist/` sürüm kontrolüne dahil edilmez.
 
-```
-agnogad.github.io/
-├── public/                  # Static assets (favicon)
-├── src/
-│   ├── components/          # Reusable Astro components
-│   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   ├── PostCard.astro
-│   │   ├── SearchBar.astro
-│   │   ├── SEO.astro
-│   │   ├── TagChip.astro
-│   │   └── ThemeToggle.astro
-│   ├── content/
-│   │   ├── config.ts        # Content collection schema
-│   │   └── posts/           # Blog posts (Markdown)
-│   ├── layouts/
-│   │   ├── BaseLayout.astro # Main layout with theme, fonts, SEO
-│   │   └── PostLayout.astro # Post-specific layout
-│   ├── lib/
-│   │   ├── constants.ts     # Site-wide configuration
-│   │   └── utils.ts         # Utility functions
-│   ├── pages/
-│   │   ├── index.astro      # Homepage with post listing
-│   │   ├── about.astro      # About page
-│   │   ├── 404.astro        # Custom 404 page
-│   │   ├── posts/
-│   │   │   └── [...slug].astro  # Dynamic post routes
-│   │   ├── tags/
-│   │   │   └── [tag].astro  # Tag-based listings
-│   │   ├── rss.xml.ts       # RSS feed endpoint
-│   │   └── search-index.json.ts  # Search index endpoint
-│   ├── styles/
-│   │   └── global.css       # Global styles and CSS variables
-│   └── env.d.ts             # TypeScript declarations
-├── astro.config.mjs         # Astro configuration
-├── tailwind.config.mjs      # Tailwind CSS configuration
-├── tsconfig.json            # TypeScript configuration
-└── package.json
+## Proje yapısı
+
+```text
+.
+├── agno.toml              # site başlığı, menü, dil, arama ayarı
+├── content/
+│   ├── _index.md          # anasayfa
+│   ├── about.md           # hakkında
+│   ├── tags.md            # etiket dizini
+│   └── posts/
+│       ├── _index.md      # /posts/ listesi
+│       └── *.md           # yazılar
+├── templates/
+│   ├── base.html          # ortak kabuk
+│   ├── index.html         # anasayfa
+│   ├── page.html          # yazı düzeni
+│   ├── section.html       # bölüm listesi
+│   ├── tag.html           # tek etiket listesi
+│   ├── tags.html          # etiket dizini
+│   ├── about.html         # hakkında düzeni
+│   ├── 404.html
+│   └── _*.html            # parçalar
+├── static/
+│   ├── style.css
+│   ├── app.js
+│   └── favicon.svg
+└── .github/workflows/deploy.yml
 ```
 
-## Writing Posts
+## Yazı ekleme
 
-Create a new `.md` file in `src/content/posts/` with frontmatter:
+`content/posts/` altında bir Markdown dosyası oluşturun. Dosya adı URL'yi
+belirler: `yeni-yazi.md` → `/posts/yeni-yazi/`.
 
 ```yaml
 ---
-title: "Your Post Title"
-description: "A concise description for previews and SEO."
-date: 2026-07-01
-tags: ["topic-1", "topic-2"]
+title: "Yazı Başlığı"
+date: 2026-07-02T14:46:49+04:00
+description: "Listelerde ve meta etiketlerinde görünen kısa açıklama."
+tags: ["Bilinç", "Nörobilim"]
 draft: false
+# math: true   # KaTeX'i yalnızca bu yazı için yükle
 ---
+
+## Giriş
+
+Markdown içerik buraya gelir.
 ```
 
-Posts support:
+- `draft: true` olan yazılar normal derlemede atlanır; `agno build --drafts`
+  ile dahil edilebilir.
+- `date` alanı sıralama, RSS ve okuma süresi için kullanılır.
+- Etiketler otomatik olarak `/tags/<slug>/` sayfalarına dönüşür.
+- `math: true` yalnızca gerektiğinde KaTeX CDN dosyalarını yükler.
 
-- **LaTeX math:** Inline `$E = mc^2$` or display `$$\int_a^b f(x)\,dx$$`
-- **Code blocks:** With language annotation for syntax highlighting
+## Dağıtım
 
-  ```python
-  def hello():
-      print("Hello, world!")
-  ```
+`main` dalına yapılan her push, GitHub Actions üzerinden siteyi üretir ve
+GitHub Pages'e yayınlar. İş akışı agno'yu sabitlenmiş bir commit'ten derler:
 
-- **Images:** Standard Markdown image syntax with optional captions
-- **Tables, blockquotes, lists:** Full GFM support
+```bash
+cargo install --git https://github.com/agnogad/agno \
+  --rev dd26606f31d7fea1f4c9b32b0848317aef30c688 --locked
+agno build
+```
 
-## Customization
+Yayınlanan site: <https://agnogad.github.io>
 
-Edit `src/lib/constants.ts` to update site title, description, author info, and navigation links.
+## Lisans
 
-The color scheme is defined via CSS custom properties in `src/styles/global.css`. The dark theme is the default; the `.light` class override provides the light theme.
-
-## License
-
-MIT
+[MIT](LICENSE)

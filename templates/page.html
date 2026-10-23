@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+{% block head_extra %}
+  {% if page.datetime %}<meta property="article:published_time" content="{{ page.datetime }}">{% endif %}
+  {% for tag in page.tags %}<meta property="article:tag" content="{{ tag }}">{% endfor %}
+  {% if page.extra and page.extra.math %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});"></script>
+  {% endif %}
+{% endblock %}
+{% block content %}
+<div class="progress" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+<article class="container narrow page-pad">
+  <header class="article-header">
+    {% if page.tags %}
+    <div class="card-tags">
+      {% for tag in page.tags %}
+        <a class="chip chip-sm" href="/tags/{{ tag|slugify }}/">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <h1 class="article-title">{{ page.title }}</h1>
+    {% if page.description %}<p class="article-desc">{{ page.description }}</p>{% endif %}
+    <div class="meta">
+      {% if page.date_display %}<time datetime="{{ page.datetime }}">{{ page.date_display }}</time>{% endif %}
+      {% if page.reading_minutes %}<span aria-hidden="true">·</span><span>{{ page.reading_minutes }} dk okuma</span>{% endif %}
+    </div>
+  </header>
+  <div class="prose">{{ page.content|safe }}</div>
+</article>
+<button class="to-top" id="back-to-top" type="button" aria-label="Yukarı çık">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+</button>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container page-pad">
+  <section class="about-hero">
+    <div class="avatar" aria-hidden="true">A</div>
+    <h1>{{ site.author or site.title }}</h1>
+    <p>{{ site.description }}</p>
+  </section>
+
+  <div class="about-grid">
+    <section class="about-card">
+      <h2>Bu Blog</h2>
+      <div class="prose prose-about">{{ page.content|safe }}</div>
+    </section>
+
+    <section class="about-card">
+      <h2>Konular</h2>
+      <div class="tag-cloud about-topics">
+        <span class="chip">Bilişsel Bilim</span>
+        <span class="chip">Nörobilim</span>
+        <span class="chip">Zihin Felsefesi</span>
+        <span class="chip">Rüya Analizi</span>
+        <span class="chip">Bilinç</span>
+        <span class="chip">Nöropsikoloji</span>
+        <span class="chip">Hafıza</span>
+      </div>
+    </section>
+
+    <section class="about-card">
+      <h2>Kolofon</h2>
+      <div class="prose prose-about">
+        <p>
+          Bu site <a href="https://github.com/agnogad/agno" target="_blank" rel="noopener noreferrer">agno</a>
+          ile inşa edilmiş, özel bir monokrom teması ile stillendirilmiştir.
+          İçerik Markdown formatında yazılır; kod blokları syntect, şablonlar
+          MiniJinja, arama ise statik bir JSON indeksiyle çalışır.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-card">
+      <h2>Teknoloji</h2>
+      <div class="tech-grid">
+        <div class="tech"><strong>agno</strong><span>Statik site üreteci</span></div>
+        <div class="tech"><strong>Rust</strong><span>Tek binary, sıfır çalışma bağımlılığı</span></div>
+        <div class="tech"><strong>MiniJinja</strong><span>Şablon motoru</span></div>
+        <div class="tech"><strong>syntect</strong><span>Kod vurgulama</span></div>
+        <div class="tech"><strong>pulldown-cmark</strong><span>Markdown</span></div>
+        <div class="tech"><strong>Plain CSS</strong><span>Tema ve tipografi</span></div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

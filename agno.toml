@@ -1,0 +1,21 @@
+title = "Agnogad"
+description = "Bilim, felsefe ve psikoloji üzerine kendi argüman ve fikirlerimle yazdığım makaleler."
+base_url = "https://agnogad.github.io"
+language = "tr"
+author = "Agnogad"
+
+highlight = true
+rss_items = 20
+search_index = true
+
+[[menu]]
+title = "Anasayfa"
+url = "/"
+
+[[menu]]
+title = "Etiketler"
+url = "/tags/"
+
+[[menu]]
+title = "Hakkında"
+url = "/about/"
